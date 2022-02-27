@@ -1,0 +1,6 @@
+BasedOnStyle: LLVM
+AllowShortBlocksOnASingleLine: Always
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLoopsOnASingleLine: true
+ColumnLimit: 0
