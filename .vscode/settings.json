@@ -1,6 +1,6 @@
 {
   "code-runner.executorMap": {
-    "c": "cd $dirWithoutTrailingSlash && clang $fileName -std=c11 -Wno-deprecated-declarations -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe"
+    "c": "cd $dirWithoutTrailingSlash && clang $fileName -std=c11 -Wno-deprecated-declarations -target x86_64-pc-windows-gnu -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe"
   },
   "code-runner.runInTerminal": true
 }
