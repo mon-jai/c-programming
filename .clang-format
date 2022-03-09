@@ -1,6 +1,8 @@
 BasedOnStyle: LLVM
+AlignAfterOpenBracket: true
 AllowShortBlocksOnASingleLine: Always
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: true
 ColumnLimit: 0
+ContinuationIndentWidth: 2
