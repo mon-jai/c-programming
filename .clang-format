@@ -6,3 +6,4 @@ AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: true
 ColumnLimit: 0
 ContinuationIndentWidth: 2
+PointerAlignment: Left
