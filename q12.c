@@ -20,9 +20,13 @@ int abs(int i) {
   if (i < 0) return i * -1;
   else return i;
 }
+
 int get_gcd(int a, int b) {
-  if (a == 0) return b;
-  else return get_gcd(b % a, a);
+  for (int i = a > b ? a : b; i > 1; i--) {
+    if (i % a == 0 && i % b == 0) return i;
+  }
+
+  return 1;
 }
 
 void addition(Fraction* fraction_1, Fraction* fraction_2, Fraction* fraction_result) {
