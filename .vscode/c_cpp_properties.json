@@ -4,7 +4,7 @@
       "name": "Win32",
       "includePath": ["${workspaceFolder}/**"],
       "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
-      "compilerPath": "D:/Program Files/msys64/clang64/bin/clang.exe",
+      "compilerPath": "C:/msys64/clang64/bin/clang.exe",
       "cStandard": "c11",
       "cppStandard": "c++14"
     }
