@@ -1,9 +1,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#define SIZE 80
 
-bool larger_than(int number_1[40], int number_2[40]) {
-  for (int i = 0; i < 40; i++) {
+bool larger_than(int number_1[SIZE], int number_2[SIZE]) {
+  for (int i = 0; i < SIZE; i++) {
     // Also works if both of them == 0
     if (number_1[i] == number_2[i]) continue;
     else if (number_1[i] > number_2[i]) return true;
@@ -13,25 +14,25 @@ bool larger_than(int number_1[40], int number_2[40]) {
   return true;
 }
 
-void input_number(int number[40]) {
+void input_number(int number[SIZE]) {
   char number_array[255];
   scanf(" %s", number_array);
 
-  int number_of_prepending_0 = 40 - strlen(number_array);
+  int number_of_prepending_0 = SIZE - strlen(number_array);
 
   for (int i = 0; i < number_of_prepending_0; i++) {
     number[i] = 0;
   }
 
-  for (int i = number_of_prepending_0, j = 0; i < 40; i++, j++) {
+  for (int i = number_of_prepending_0, j = 0; i < SIZE; i++, j++) {
     number[i] = number_array[j] - '0';
   }
 }
 
-void print_number(int* number, int no_of_digits) {
+void print_number(int* number) {
   bool no_more_leading_zero = false;
 
-  for (int i = 0; i < no_of_digits; i++) {
+  for (int i = 0; i < SIZE; i++) {
     if (number[i] == 0 && !no_more_leading_zero) {
       continue;
     } else {
@@ -44,28 +45,26 @@ void print_number(int* number, int no_of_digits) {
   printf("\n");
 }
 
-int addition(int number_1[40], int number_2[40], int result[41]) {
+void addition(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
   int carry = 0;
 
-  for (int i = 40 - 1; i >= 0; i--) {
+  for (int i = SIZE - 1; i >= 0; i--) {
     int result_for_i = number_1[i] + number_2[i] + carry;
     carry = result_for_i / 10;
     result[i] = result_for_i % 10;
   }
 
   result[0] = carry * 10 + result[0];
-
-  return 40;
 }
 
-int subtraction(int number_1[40], int number_2[40], int result[40]) {
+void subtraction(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
   int carry = 0;
   bool number_1_larger_than_number_2 = larger_than(number_1, number_2);
   int* larger_number = number_1_larger_than_number_2 ? number_1 : number_2;
   int* smaller_number = number_1_larger_than_number_2 ? number_2 : number_1;
-  int last_digit = 40 - 1;
+  int last_digit = SIZE - 1;
 
-  for (int i = 40 - 1; i >= 0; i--) {
+  for (int i = SIZE - 1; i >= 0; i--) {
     int result_for_i = larger_number[i] - smaller_number[i] - carry;
     carry = 0;
 
@@ -79,18 +78,41 @@ int subtraction(int number_1[40], int number_2[40], int result[40]) {
   }
 
   if (!number_1_larger_than_number_2) result[last_digit] = -result[last_digit];
+}
 
-  return 40;
+void multiplication(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
+  int carry = 0;
+  bool number_1_larger_than_number_2 = larger_than(number_1, number_2);
+  int* larger_number = number_1_larger_than_number_2 ? number_1 : number_2;
+  int* smaller_number = number_1_larger_than_number_2 ? number_2 : number_1;
+
+  for (int i = 0; i < SIZE; i++) {
+    int no_of_addition = smaller_number[i];
+    if (no_of_addition == 0) continue;
+
+    int result_for_i[SIZE] = {0};
+
+    for (int j = 0; j < no_of_addition; j++) {
+      addition(larger_number, result_for_i, result_for_i);
+    }
+
+    for (int k = 0; k < SIZE; k++) {
+      if (k - i > 0) result_for_i[k] = 0;
+      else result_for_i[k] = result_for_i[k + (SIZE - 1) - i];
+    }
+
+    addition(result, result_for_i, result);
+  }
 }
 
 int main() {
-  int number_1[40];
-  int number_2[40];
-  int result[80] = {0};
+  int number_1[SIZE];
+  int number_2[SIZE];
+  int result[SIZE] = {0};
 
   input_number(number_1);
   input_number(number_2);
 
-  int no_of_digits = addition(number_1, number_2, result);
-  print_number(result, no_of_digits);
+  multiplication(number_1, number_2, result);
+  print_number(result);
 }
