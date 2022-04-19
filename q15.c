@@ -68,6 +68,7 @@ void subtraction(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
     int result_for_i = larger_number[i] - smaller_number[i] - carry;
     carry = 0;
 
+    // Borrowing
     if (result_for_i < 0) {
       result_for_i += 10;
       carry = 1;
@@ -77,7 +78,7 @@ void subtraction(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
     if (result_for_i != 0) last_digit = i;
   }
 
-  if (!number_1_larger_than_number_2) result[last_digit] = -result[last_digit];
+  if (!number_1_larger_than_number_2) result[last_digit] = result[last_digit] * -1;
 }
 
 void multiplication(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
@@ -90,18 +91,21 @@ void multiplication(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
     int no_of_addition = smaller_number[i];
     if (no_of_addition == 0) continue;
 
-    int result_for_i[SIZE] = {0};
+    int multiplication_result[SIZE] = {0};
 
+    // Adding the same number for no_of_addition times
+    // e.g. 5 * 3 = 5 + 5 + 5
     for (int j = 0; j < no_of_addition; j++) {
-      addition(larger_number, result_for_i, result_for_i);
+      addition(larger_number, multiplication_result, multiplication_result);
     }
 
+    // Mutipling resulted number with 10^i
     for (int k = 0; k < SIZE; k++) {
-      if (k - i > 0) result_for_i[k] = 0;
-      else result_for_i[k] = result_for_i[k + (SIZE - 1) - i];
+      if (k - i > 0) multiplication_result[k] = 0;
+      else multiplication_result[k] = multiplication_result[k + (SIZE - 1) - i];
     }
 
-    addition(result, result_for_i, result);
+    addition(result, multiplication_result, result);
   }
 }
 
