@@ -110,13 +110,16 @@ void multiplication(int number_1[SIZE], int number_2[SIZE], int result[SIZE]) {
 }
 
 int main() {
+  int option;
   int number_1[SIZE];
   int number_2[SIZE];
   int result[SIZE] = {0};
+  void (*operation[3])(int[SIZE], int[SIZE], int[SIZE]) = {addition, subtraction, multiplication};
 
+  scanf(" %d", &option);
   input_number(number_1);
   input_number(number_2);
 
-  multiplication(number_1, number_2, result);
+  operation[option - 1](number_1, number_2, result);
   print_number(result);
 }
