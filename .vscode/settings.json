@@ -1,6 +1,6 @@
 {
   "code-runner.executorMap": {
-    "c": "cd $dirWithoutTrailingSlash && C:/msys64/clang64/bin/clang.exe $fileName -std=c11 -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe"
+    "c": "clear && cd $dirWithoutTrailingSlash && C:/msys64/clang64/bin/clang.exe $fileName -std=c11 -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe"
   },
   "code-runner.runInTerminal": true,
   "C_Cpp.autoAddFileAssociations": false
