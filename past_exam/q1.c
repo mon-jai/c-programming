@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef enum {
@@ -60,31 +61,24 @@ void edit_string(char* input_str, char* word_1, char* word_2, char* str_with_wor
   }
 }
 
+int compare_count_records(const void* s1, const void* s2) {
+  CountRecord* record_1_ptr = (CountRecord*)s1;
+  CountRecord* record_2_ptr = (CountRecord*)s2;
+
+  if (record_1_ptr->count != record_2_ptr->count)
+    return record_2_ptr->count - record_1_ptr->count;
+  else
+    return strcmp(record_1_ptr->key, record_2_ptr->key);
+}
+
 void print_all_records(CountRecord count_records[], int* count_records_len) {
   int highest_count = 0;
   int second_highest_count = 0;
 
-  for (int i = 0; i < *count_records_len; i++) {
-    int count = count_records[i].count;
+  qsort(count_records, *count_records_len, sizeof(CountRecord), compare_count_records);
 
-    if (count > highest_count) {
-      second_highest_count = highest_count;
-      highest_count = count;
-    } else if (count > second_highest_count) {
-      second_highest_count = count;
-    }
-  }
-
-  for (int i = 0; i < *count_records_len; i++) {
-    if (count_records[i].count == highest_count) {
-      printf("%s : %d\n", count_records[i].key, count_records[i].count);
-    }
-  }
-
-  for (int i = 0; i < *count_records_len; i++) {
-    if (count_records[i].count == second_highest_count) {
-      printf("%s : %d\n", count_records[i].key, count_records[i].count);
-    }
+  for (int i = 0; i < 2; i++) {
+    printf("%s : %d\n", count_records[i].key, count_records[i].count);
   }
 }
 
@@ -105,7 +99,7 @@ CountRecord* add_or_create_record(CountRecord count_records[], int* count_record
   return &count_records[*count_records_len - 1];
 }
 
-void print_count_results(char* input_str, CountType count_type) {
+void count_and_print(char* input_str, CountType count_type) {
   CountRecord count_records[1000];
   int count_records_len = 0;
   int input_str_len = strlen(input_str);
@@ -148,11 +142,8 @@ int main() {
   char word_1[1000];
   char word_2[1000];
 
-  // Can you can a can as a canner can can a can
   scanf(" %[^\n]", input_str);
-  // can
   scanf(" %[^\n]", word_1);
-  // ban
   scanf(" %[^\n]", word_2);
 
   char str_with_word_inserted[1000];
@@ -163,7 +154,7 @@ int main() {
   edit_string(input_str, word_1, word_2, str_with_word_inserted, REPLACE);
   printf("%s\n", str_with_word_inserted);
 
-  print_count_results(input_str, WORDS);
+  count_and_print(input_str, WORDS);
 
-  print_count_results(input_str, CHARACTERS);
+  count_and_print(input_str, CHARACTERS);
 }
