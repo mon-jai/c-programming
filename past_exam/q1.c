@@ -77,13 +77,13 @@ void print_all_records(CountRecord count_records[], int* count_records_len) {
 
   for (int i = 0; i < *count_records_len; i++) {
     if (count_records[i].count == highest_count) {
-      printf("%s: %d\n", count_records[i].key, count_records[i].count);
+      printf("%s : %d\n", count_records[i].key, count_records[i].count);
     }
   }
 
   for (int i = 0; i < *count_records_len; i++) {
     if (count_records[i].count == second_highest_count) {
-      printf("%s: %d\n", count_records[i].key, count_records[i].count);
+      printf("%s : %d\n", count_records[i].key, count_records[i].count);
     }
   }
 }
