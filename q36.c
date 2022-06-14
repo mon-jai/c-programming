@@ -42,7 +42,6 @@ void insert_after_item(LinkListItem** linked_list_head_ptr, LinkListItem** linke
   while (true) {
     if (item_to_insert_after == NULL) return;
     if (item_to_insert_after->value == insert_after) break;
-
     item_to_insert_after = item_to_insert_after->next_item;
   }
   item_to_insert_before = item_to_insert_after->next_item;
