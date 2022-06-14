@@ -78,11 +78,12 @@ void remove_item(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list
 void shift(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
   if (*linked_list_head_ptr == NULL) return;
 
+  LinkListItem* first_item = *linked_list_head_ptr;
   LinkListItem* second_item = (*linked_list_head_ptr)->next_item;
   *linked_list_head_ptr = second_item;
   if (second_item == NULL) *linked_list_end_ptr = NULL;
 
-  free(*linked_list_head_ptr);
+  free(first_item);
 }
 
 void pop(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
@@ -105,7 +106,7 @@ void pop(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr
     item_before_last_item->next_item = NULL;
     *linked_list_end_ptr = item_before_last_item;
 
-    free(*linked_list_end_ptr);
+    free(linked_list_last_item);
   }
 }
 
@@ -114,9 +115,8 @@ void print_linked_list(LinkListItem* linked_list_head) {
     printf("None any node\n");
     return;
   }
-  printf("List: ");
-  LinkListItem* linked_list_current = linked_list_head;
 
+  LinkListItem* linked_list_current = linked_list_head;
   while (true) {
     printf("%d ", linked_list_current->value);
     linked_list_current = linked_list_current->next_item;
@@ -141,8 +141,6 @@ int main() {
     int action;
     scanf("%d", &action);
 
-    printf("%d\n", action);
-
     if (action == 1) push(&linked_list_head, &linked_list_end);
     else if (action == 2) insert_after_item(&linked_list_head, &linked_list_end);
     else if (action == 3) remove_item(&linked_list_head, &linked_list_end);
@@ -151,11 +149,6 @@ int main() {
     else if (action == 5) pop(&linked_list_head, &linked_list_end);
 
     else if (action == 6) break;
-
-    printf("%p %p\n", linked_list_head, linked_list_end);
-    print_linked_list(linked_list_head);
-
-    printf("\n");
   }
 
   print_linked_list(linked_list_head);
