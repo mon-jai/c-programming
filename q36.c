@@ -8,7 +8,7 @@ typedef struct linked_list_item {
   struct linked_list_item* next_item;
 } LinkListItem;
 
-LinkListItem* push(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
+void push(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
   int value;
   scanf(" %d", &value);
 
@@ -16,18 +16,15 @@ LinkListItem* push(LinkListItem** linked_list_head_ptr, LinkListItem** linked_li
   new_linked_list_item->value = value;
   new_linked_list_item->next_item = NULL;
 
-  if (*linked_list_head_ptr == NULL) *linked_list_head_ptr = new_linked_list_item;
-
-  if (*linked_list_end_ptr != NULL) {
+  if (*linked_list_head_ptr == NULL) {
+    *linked_list_head_ptr = new_linked_list_item;
+    new_linked_list_item->prev_item = NULL;
+  } else {
     (*linked_list_end_ptr)->next_item = new_linked_list_item;
     new_linked_list_item->prev_item = *linked_list_end_ptr;
-  } else {
-    new_linked_list_item->prev_item = NULL;
   }
 
   *linked_list_end_ptr = new_linked_list_item;
-
-  return new_linked_list_item;
 }
 
 void insert_after_item(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
@@ -41,19 +38,17 @@ void insert_after_item(LinkListItem** linked_list_head_ptr, LinkListItem** linke
   LinkListItem* item_to_insert_after;
   LinkListItem* item_to_insert_before;
 
-  LinkListItem* new_linked_list_item = malloc(sizeof(LinkListItem));
-  new_linked_list_item->value = value;
-
   item_to_insert_after = *linked_list_head_ptr;
   while (true) {
+    if (item_to_insert_after == NULL) return;
     if (item_to_insert_after->value == insert_after) break;
-    if (item_to_insert_after->next_item == NULL) return;
 
     item_to_insert_after = item_to_insert_after->next_item;
   }
-
   item_to_insert_before = item_to_insert_after->next_item;
 
+  LinkListItem* new_linked_list_item = malloc(sizeof(LinkListItem));
+  new_linked_list_item->value = value;
   new_linked_list_item->next_item = item_to_insert_after->next_item;
   new_linked_list_item->prev_item = item_to_insert_after;
 
@@ -81,11 +76,10 @@ void remove_item(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list
     while (true) {
       if (item_to_remove == NULL) return;
       if (item_to_remove->value == value_to_remove) break;
-
       item_to_remove = item_to_remove->next_item;
     }
 
-    item_to_remove->prev_item->next_item = item_to_remove->next_item;
+    (item_to_remove->prev_item)->next_item = item_to_remove->next_item;
     if (*linked_list_end_ptr == item_to_remove) *linked_list_end_ptr = item_to_remove->prev_item;
 
     free(item_to_remove);
@@ -99,9 +93,9 @@ void shift(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_p
   LinkListItem* second_item = (*linked_list_head_ptr)->next_item;
 
   *linked_list_head_ptr = second_item;
-  second_item->prev_item = NULL;
 
   if (second_item == NULL) *linked_list_end_ptr = NULL;
+  else second_item->prev_item = NULL;
 
   free(first_item);
 }
@@ -109,17 +103,15 @@ void shift(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_p
 void pop(LinkListItem** linked_list_head_ptr, LinkListItem** linked_list_end_ptr) {
   if (*linked_list_head_ptr == NULL) return;
 
-  if (*linked_list_head_ptr == *linked_list_end_ptr) {
-    *linked_list_head_ptr = NULL;
-    *linked_list_end_ptr = NULL;
-  } else {
-    LinkListItem* last_item = (*linked_list_end_ptr);
+  LinkListItem* last_item = (*linked_list_end_ptr);
+  LinkListItem* second_last_item = (*linked_list_end_ptr)->prev_item;
 
-    last_item->prev_item->next_item = NULL;
-    *linked_list_end_ptr = last_item->prev_item;
+  *linked_list_end_ptr = second_last_item;
 
-    free(last_item);
-  }
+  if (second_last_item == NULL) *linked_list_head_ptr = NULL;
+  else second_last_item->next_item = NULL;
+
+  free(last_item);
 }
 
 void print_linked_list(LinkListItem* linked_list_head) {
