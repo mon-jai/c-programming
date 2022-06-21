@@ -42,7 +42,7 @@ double rectangular_perimeter(Rectangular* rectangular) {
 double rectangular_area(Rectangular* rectangular) {
   return rectangular->width * rectangular->length;
 }
-Rectangular* new_Rectangular(double width, double length) {
+Rectangular* new_Rectangular(double width, double length) { // STUDY
   Rectangular* rectangular = malloc(sizeof(Rectangular));
   strcpy(rectangular->name, "Rectangular");
   rectangular->width = width;
@@ -86,7 +86,7 @@ double triangle_perimeter(Triangle* triangle) {
 }
 double triangle_area(Triangle* triangle) {
   double s = triangle_perimeter(triangle) / 2; // semi_perimeter
-  return sqrt(s * (s - triangle->a) * (s - triangle->b) * (s - triangle->c));
+  return sqrt(s * (s - triangle->a) * (s - triangle->b) * (s - triangle->c)); // STUDY
 }
 Triangle* new_Triangle(double a, double b, double c) {
   Triangle* triangle = malloc(sizeof(Triangle));
@@ -117,7 +117,7 @@ int main() {
       Circle* circle = new_Circle(radius);
 
       double perimeter = circle->perimeter(circle);
-      printf("%.0lf\n", perimeter);
+      printf("%.0lf\n", perimeter); // STUDY
       sum_of_perimeters += perimeter;
       break;
     }

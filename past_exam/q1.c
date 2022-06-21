@@ -19,7 +19,7 @@ typedef struct {
 } CountRecord;
 
 void edit_string(char* input_str, char* word_1, char* word_2, char* str_with_word_inserted, EditType edit_type) {
-  int input_str_len = strlen(input_str);
+  int input_str_len = strlen(input_str); // STUDY
   int word_1_len = strlen(word_1);
 
   str_with_word_inserted[0] = '\0';
@@ -56,7 +56,7 @@ void edit_string(char* input_str, char* word_1, char* word_2, char* str_with_wor
     char to_be_insetred[2];
     to_be_insetred[0] = input_str[i];
     to_be_insetred[1] = '\0';
-    strcat(str_with_word_inserted, to_be_insetred);
+    strcat(str_with_word_inserted, to_be_insetred); // STUDY
     i++;
   }
 }
@@ -68,14 +68,14 @@ int compare_count_records(const void* s1, const void* s2) {
   if (record_1_ptr->count != record_2_ptr->count)
     return record_2_ptr->count - record_1_ptr->count;
   else
-    return strcmp(record_1_ptr->key, record_2_ptr->key);
+    return strcmp(record_1_ptr->key, record_2_ptr->key); // STUDY
 }
 
 void print_all_records(CountRecord count_records[], int* count_records_len) {
   int highest_count = 0;
   int second_highest_count = 0;
 
-  qsort(count_records, *count_records_len, sizeof(CountRecord), compare_count_records);
+  qsort(count_records, *count_records_len, sizeof(CountRecord), compare_count_records); // STUDY
 
   for (int i = 0; i < 2; i++) {
     printf("%s : %d\n", count_records[i].key, count_records[i].count);
