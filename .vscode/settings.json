@@ -3,5 +3,6 @@
     "c": "clear && cd $dirWithoutTrailingSlash && C:/msys64/clang64/bin/clang.exe $fileName -std=c11 -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe"
   },
   "code-runner.runInTerminal": true,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
   "C_Cpp.autoAddFileAssociations": false
 }
